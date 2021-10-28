@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+service Sensor {
+  rpc SendReading (Reading) returns (ReadingReplay);  
+}
+service Server {
+  rpc RegisterSensor (Register) returns (RegisterReplay);
+  rpc NearestNeighbro (NN) returns (NNReplay);
+  rpc ImAlive (Alive) returns (AliveReplay);
+  rpc Disconnect (DC) returns (DC);   
+}
+
+message Alive { int64 SensorId = 1; }
+message AliveReplay { }
+
+message NN {
+  int64 SensorId = 1;
+}
+message NNReplay {
+  int32 IpAddress = 1;
+  int32 Port = 2;
+}
+
+message Register {
+  int32 IpAddress = 1;
+  int32 Port = 2;
+  float Longitude = 3;
+  float Latitude = 4;
+}
+message RegisterReplay {
+  int64 SensorId = 1;
+}
+
+message Reading {
+  int64 SensorId = 1;
+  int64 Temperature = 2;
+  int64 Pressure = 3;
+  int64 Humidity = 4;
+  int64 CO = 5;
+  int64 NO2 = 6;
+  int64 SO2 = 7;
+}
+message ReadingReplay {
+  string message = 1;
+}

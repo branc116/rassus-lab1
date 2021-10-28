@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Client", "Sensors.Client\Sensors.Client.csproj", "{4C7F5939-0F10-4498-9D5F-B8DAF044DCD5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Grpc", "Sensors.Grpc\Sensors.Grpc.csproj", "{A1E3A584-91F6-434D-B517-7EAE267A4527}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Server", "Sensors.Server\Sensors.Server.csproj", "{FC97A2B4-EB4C-4A3E-9C85-8EEB8E41E226}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4C7F5939-0F10-4498-9D5F-B8DAF044DCD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C7F5939-0F10-4498-9D5F-B8DAF044DCD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C7F5939-0F10-4498-9D5F-B8DAF044DCD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C7F5939-0F10-4498-9D5F-B8DAF044DCD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1E3A584-91F6-434D-B517-7EAE267A4527}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1E3A584-91F6-434D-B517-7EAE267A4527}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1E3A584-91F6-434D-B517-7EAE267A4527}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1E3A584-91F6-434D-B517-7EAE267A4527}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC97A2B4-EB4C-4A3E-9C85-8EEB8E41E226}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC97A2B4-EB4C-4A3E-9C85-8EEB8E41E226}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC97A2B4-EB4C-4A3E-9C85-8EEB8E41E226}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC97A2B4-EB4C-4A3E-9C85-8EEB8E41E226}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
