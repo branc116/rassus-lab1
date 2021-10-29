@@ -3,7 +3,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddMvc();
-var a = new Greeter.GreeterClient(Grpc.Net.Client.GrpcChannel.ForAddress("shitfuck"));
+// var a = new Greeter.GreeterClient(Grpc.Net.Client.GrpcChannel.ForAddress("shitfuck"));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
