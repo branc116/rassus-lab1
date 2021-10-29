@@ -7,8 +7,11 @@ service Server {
   rpc RegisterSensor (Register) returns (RegisterReplay);
   rpc NearestNeighbro (NN) returns (NNReplay);
   rpc ImAlive (Alive) returns (AliveReplay);
-  rpc Disconnect (DC) returns (DC);   
+  rpc Disconnect (DC) returns (DCRespounse);   
 }
+
+message DC { int64 SensorId = 1; }
+message DCRespounse { }
 
 message Alive { int64 SensorId = 1; }
 message AliveReplay { }
