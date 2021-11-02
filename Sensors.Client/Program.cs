@@ -1,42 +1,46 @@
+using static Sensors.Grpc.Helper;
 var builder = WebApplication.CreateBuilder(args);
+AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+// -- <listen_ip> <listen_port> <server_ip> <server_port>
+
+var (listen_ip, listen_port, server_ip, server_port) = (args[0], args[1], args[2], args[3]);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddGrpc();
-int iptoint(string ip) {
-    var a = ip.Split(".").Select(int.Parse).ToArray();
-    int ret = 0;
-    for(int i = 0; i < 4;i++) {
-        ret |= a[i] << (8*i);
-    }
-    return ret;
-}
-int inttoip(string ip) {
-    
-}
+builder.Services.AddRouting();
+builder.Services.AddHostedService<Sensors.Client.RelayService>();
+
+
+System.Console.WriteLine("192.168.1.1".iptoint().inttoip());
+
+builder.Services.AddSingleton<IDataAccaquerer>(i => new FakeDataAccaquerer(DateTime.Now, "FakeData.csv"));
+builder.Services.AddSingleton(_ => new Sensors.Grpc.Client(Grpc.Net.Client.GrpcChannel.ForAddress($"http://{server_ip}:{server_port}")));
 builder.Services.AddSingleton(i => {
     var client = i.GetRequiredService<Sensors.Grpc.Client>();
     var random = new Random();
-    client.RegisterSensorAsync(new Register {IpAddress=  args[1], Port Latitude = (float)(random.NextDouble() * 180 - 90), Longitude = (float)(random.NextDouble() * 360 - 180)});
-    client.NearestNeighbro(new NN {SensorId = })
-})
+    var a = client.RegisterSensor(new Register {
+                IpAddress= listen_ip.iptoint(),
+                Port=int.Parse(listen_port),
+                Latitude= (float)(random.NextDouble() * 180 - 90),
+                Longitude= (float)(random.NextDouble() * 360 - 180)
+            });
+    var nn = client.NearestNeighbro(new NN {SensorId = a.SensorId});
+    return new Sensors.Grpc.SensorC(Grpc.Net.Client.GrpcChannel.ForAddress($"http://{nn.IpAddress.inttoip()}:{nn.Port}"))
+    {
+        SensorId = a.SensorId
+    };
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
+app.UseRouting();
+
 app.UseEndpoints(i => {
     i.MapGrpcService<Sensors.Grpc.SensorRelay>();
 });
 
 app.UseStaticFiles();
-
-app.UseRouting();
 
 app.MapRazorPages();
 

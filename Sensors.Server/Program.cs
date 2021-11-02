@@ -1,9 +1,21 @@
+// -- <listen_ip> <listen_port>
+AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+var (listen_ip, listen_port) = (args[0], args[1]);
+
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddMvc();
-// var a = new Greeter.GreeterClient(Grpc.Net.Client.GrpcChannel.ForAddress("shitfuck"));
+builder.Services.AddSingleton(i => new SensorServer.ServerConfiguration {
+    Ip = listen_ip,
+    Port = int.Parse(listen_port)
+});
+builder.Services.AddGrpc(); 
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -18,6 +30,10 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseEndpoints(i => {
+    i.MapGrpcService<global::SensorServer.GrpcServer>().AllowAnonymous();
+});
 
 app.UseAuthorization();
 
