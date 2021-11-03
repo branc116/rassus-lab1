@@ -33,6 +33,7 @@ app.UseRouting();
 
 app.UseEndpoints(i => {
     i.MapGrpcService<global::SensorServer.GrpcServer>().AllowAnonymous();
+    i.MapGrpcService<global::SensorServer.GrpcSensorServer>().AllowAnonymous();
 });
 
 app.UseAuthorization();

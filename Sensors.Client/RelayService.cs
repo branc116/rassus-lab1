@@ -16,16 +16,20 @@ public class RelayService : IHostedService
     public Task StartAsync(CancellationToken cancellationToken)
     {
         thread = new Thread(async () => {
-            var entry = await _dataAccaquerer.GetEntryAsync();
-            await _relay.SendReadingAsync(new Reading {
-                Temperature = entry.Temperature,
-                Pressure = entry.Pressure,
-                Humidity = entry.Humidity,
-                CO = entry.CO,
-                NO2 = entry.NO2,
-                SO2 = entry.SO2,
-                SensorId = _relay.SensorId
-            });
+            while(true) {
+                var entry = await _dataAccaquerer.GetEntryAsync();
+                var res = await _relay.SendReadingAsync(new Reading {
+                    Temperature = entry.Temperature,
+                    Pressure = entry.Pressure,
+                    Humidity = entry.Humidity,
+                    CO = entry.CO,
+                    NO2 = entry.NO2,
+                    SO2 = entry.SO2,
+                    SensorId = _relay.SensorId
+                });
+                System.Console.WriteLine(res.Message);
+                await Task.Delay(1000);
+            }
         });
         thread.Start();
         return Task.CompletedTask;
