@@ -14,6 +14,8 @@ builder.Services.AddSingleton(i => new SensorServer.ServerConfiguration {
     Port = int.Parse(listen_port)
 });
 builder.Services.AddGrpc(); 
+builder.Services.AddSingleton<Sensors.Server.Db.SensorsDatabase>();
+
 
 
 var app = builder.Build();

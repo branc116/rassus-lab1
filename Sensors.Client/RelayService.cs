@@ -6,12 +6,16 @@ public class RelayService : IHostedService
 {
     private readonly SensorC _relay;
     private readonly IDataAccaquerer _dataAccaquerer;
+    private readonly Grpc.Client _server;
     Thread? thread;
     
-    public RelayService(Sensors.Grpc.SensorC relay, IDataAccaquerer dataAccaquerer)
+    public RelayService(Sensors.Grpc.SensorC relay,
+        Sensors.Grpc.Client server,
+        IDataAccaquerer dataAccaquerer)
     {
         _relay = relay;
         _dataAccaquerer = dataAccaquerer;
+        _server = server;
     }
     public Task StartAsync(CancellationToken cancellationToken)
     {
@@ -28,6 +32,7 @@ public class RelayService : IHostedService
                     SensorId = _relay.SensorId
                 });
                 System.Console.WriteLine(res.Message);
+                var ress = await _server.ImAliveAsync(new Alive {SensorId = _relay.SensorId});
                 await Task.Delay(1000);
             }
         });

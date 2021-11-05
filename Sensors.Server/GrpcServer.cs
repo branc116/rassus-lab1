@@ -6,6 +6,8 @@ namespace SensorServer;
 public class ServerConfiguration {
     public string? Ip { get; set; }
     public int Port { get; set; }
+    public double Longditude { get; set; }
+    public double Latitude { get; set; }
 }
 
 public class GrpcServer : global::Server.ServerBase {
